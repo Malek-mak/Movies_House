@@ -1,0 +1,55 @@
+{% extends 'Movies/core.html' %}
+
+{% block content %}
+<div>
+    <h1 class="text-white text-4xl font-semibold text-center">Movies</h1><br>
+    <div class="flex flex-row items-center justify-center gap-4">
+        <form method="get" action="" class="px-12">
+            <h3 class="text-white font-semibold p-2">Search by Name:</h3>
+            <input type="text" name="search" placeholder="Search for Movie" class="w-80 h-8 rounded-lg p-2">
+            <button type="submit" class="btn btn-primary py-2 px-5 bg-yellow-500 mx-2">Search</button>
+        </form><br>
+        
+        <form action="" method="get" class="px-12">
+            <h3 class="text-white font-semibold p-2">Filter by Genre:</h3>
+            <select name="genre" class="text-black p-2 ">
+                {% for g in genres %}
+                    <option value="{{ g.id }}">{{ g.genre_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary py-2 px-5 bg-yellow-500 mx-2">Filter</button>
+        </form><br>
+    </div><br><hr><br>
+    <div class="grid grid-cols-4 gap-4 ">
+        {% for movie in movies %}
+        <div class="col-{{ movie.id }} bg-neutral-800 rounded-lg">
+            <a href="{% url 'movie_detail'  movie.id  %}">
+                    <div class="pb-2">
+                        <figure class="pb-2">
+                            <img src="{{ movie.image.url }}"><hr>
+                        </figure>
+                        <div class="pl-2">
+                        <h1 class="text-white text-xl font-bold text-center pb-4"> {{ movie.name }}</h1>
+                        <h2 class="text-white">Duration: {{ movie.duration }} min</h2>
+                        <h2 class="text-white">Rating: {{ movie.rating }}</h2>
+                        <p class="text-white">
+                            Genre: 
+                            {% for genre in movie.genre.all %}
+                                {{ genre }}
+                            {% endfor %}</p>
+
+                        <h2 class="text-white">Year: {{ movie.year }}</h2>
+                        <h2 class="text-white">Ticket Price: ${{ movie.price }}</h2>
+                        <p class="text-white"><strong> Play Dates:</strong><br>
+                            {% for d in movie.showtimes.all %}
+                                {{ d.date }} <strong class="text-black px-2 font-bold"> {{ d.tickets_left }} Seat Left</strong><br>
+                            {% endfor %}
+                        </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

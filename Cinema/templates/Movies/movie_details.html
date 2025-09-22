@@ -1,0 +1,151 @@
+{% extends 'Movies/core.html' %}
+{% block title %}Details{% endblock %}
+
+{% block content %}
+    <div class="columns-2xs gap-6">
+        <div class="aspect-1/3 p-2">
+                <figure class="pb-2">
+                    <img src="{{ movie.image.url }}">
+                </figure>
+        </div>
+                        <div class="p-2 aspect-2/3 ">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="text-green-500 text-center rounded-xl"  id="message_container">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        <h1 class="text-white text-4xl font-bold">{{ movie.name }}</h1><br>
+                        <h2 class="text-gray-500 font-semibold">Duration: {{ movie.duration }}</h2>
+                        <h2 class="text-gray-500 font-semibold">Rating: {{ movie.rating }}</h2>
+                        <h2 class="text-gray-500 font-semibold">Year: {{ movie.year }}</h2>
+                        <p class="text-white font-semibold">
+                            {% for genre in movie.genre.all %}
+                               <span class=""> {{ genre }},  </span>
+                            {% endfor %}</p>
+                        <h2 class="text-white font-semibold">Ticket Price: {{ movie.price }}</h2>
+                        <ul class="text-white font-semibold">
+                            {% for d in movie.showtimes.all %}
+                                <li>{{ d.date }}</li>
+                    
+                                <p class="text-white">Seats left: {{ d.tickets_left }}</p>
+                                
+                            {% endfor %}
+                        </ul>
+                        <br>
+                        </div>
+                    {% if request.user.is_authenticated %}
+                        <form method="post" id="ticket-form">
+                            {% csrf_token %}
+                            
+                            <!-- Date dropdown -->
+
+                            {{ form.date }}
+                            
+                            <!-- Hidden seat input (gets filled from popup) -->
+                            <input type="hidden"  name="seat" id="seat-input">
+                            <span class="font-bold px-4 py-2 bg-yellow-600 rounded-lg hidden" id="seat-label"></span>
+                            <button type="submit" id="sbt-btn" class="btn btn-primary px-6 py-2 bg-yellow-600 hidden m-2">Book</button>
+                        </form>
+
+                        <!-- Popup modal -->
+                        <div id="seat-modal" class="modal" style="display: none;">
+                            <div class="modal-content">
+                                <span id="close-modal">&times;</span>
+                                <h2>Select a seat</h2>
+                                <div id="seat-container">
+                                    <!-- seats will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <h2 class="text-white font-semibold m3">Please Login to Book Seats.</h2>
+                    {% endif %}
+                        <style>
+                        .modal {
+                            position: fixed; top: 6cm; left: 30%;
+                            width: 38%; height: 40%;
+                            background: rgba(0,0,0,0.6);
+                            align-items: center; justify-content: center;
+                            display: grid;
+                            grid-template-columns: repeat(10, 50px); 
+                            gap: 8px;
+                            margin-top: 20px;
+                           
+                        }
+                        
+                        .modal-content {
+                            
+                            background: white; padding: 20px; border-radius: 8px;
+                        }
+                        #seat-container button {
+                            margin: 4px; padding: 10px; border: 1px solid #ccc; background-color: green;
+                        }
+                    </style>
+                        
+            </div>
+        <div class="container py-6 px-4 bg-neutral-800 m-4 rounded-lg">
+            <h2 class="text-white font-semibold">Discription: </h2><br>
+                <p class="text-white">
+                    {{ movie.discription }}
+                </p>
+        </div>
+        <script>
+            
+       
+            document.addEventListener("DOMContentLoaded", function () {
+                const dateSelect = document.getElementById("id_date");
+                const seatModal = document.getElementById("seat-modal");
+                const seatContainer = document.getElementById("seat-container");
+                const seatInput = document.getElementById("seat-input");
+                const closeModal = document.getElementById("close-modal");
+                const subbtn = document.getElementById("sbt-btn");
+                const seatlabel = document.getElementById("seat-label");
+                const movieId = "{{ movie.id }}";  // passed from view
+
+                // Open modal when date is selected
+                dateSelect.addEventListener("change", function () {
+                    const dateId = this.value;
+                    if (dateId) {
+                        fetch(`/available-seats/${movieId}/${dateId}/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                seatContainer.innerHTML = "";
+                                data.forEach(seat => {
+                                    const btn = document.createElement("button");
+                                    btn.type = "button";
+                                    
+                                    btn.textContent = seat.label;
+                                    btn.addEventListener("click", function () {
+                                        seatInput.value = seat.id; // set hidden input
+                                        seatModal.style.display = "none"; // close popup
+                                        seatlabel.innerHTML = seat.label;
+                                        seatlabel.classList.remove('hidden');
+                                        subbtn.classList.remove('hidden');
+
+
+                                    });
+                                    seatContainer.appendChild(btn);
+                                });
+                                seatModal.style.display = "flex";
+                            });
+                    }
+                });
+
+                // Close modal
+                closeModal.addEventListener("click", function () {
+                    seatModal.style.display = "none";
+                });
+            });
+
+            var message_ele = document.getElementById("message_container");
+
+        // Set a timeout to hide the element after a few seconds (e.g., 3000 milliseconds = 3 seconds)
+        setTimeout(function(){ 
+            if (message_ele) { // Check if the element exists before trying to hide it
+                message_ele.style.display = "none"; 
+            }
+        }, 1000);
+        </script>
+{% endblock %}

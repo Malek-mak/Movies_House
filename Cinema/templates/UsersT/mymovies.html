@@ -1,0 +1,49 @@
+{% extends 'Movies/core.html' %}
+{% block title %}My Movies{% endblock %}
+
+{% block content %}
+    <h1 class="text-white text-4xl">My Movies: {{ request.user }}</h1><hr><br>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="text-green-500 text-center rounded-xl"  id="message_container">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+    <div class="grid grid-cols-4 gap-4 ">
+        {% for ticket in data %}
+            <div class="col-{{ ticket.id }} bg-neutral-800 rounded-lg">
+                <div class="pb-2" >
+                        <figure class="pb-2">
+                            <img src="{{ ticket.movie.image.url }}"><hr>
+                        </figure>
+                        <div class="pl-2">
+                        <h1 class="text-white text-2xl font-bold text-center">{{ ticket.movie.name }}</h1>
+                        <h2 class="text-white">Seat: <strong>{{ ticket.seat }}</strong></h2>
+                        <h2 class="text-white">Play Date: {{ ticket.date.date }}</h2>
+                        <h2 class="text-white">Ticket Price: {{ ticket.movie.price }}</h2>
+                        <h2 class="text-white">Ticket Booked at: {{ ticket.booked_at }}</h2>
+                        </div>
+                       <a href="{% url 'edit' ticket.id %}"><button class="px-4 py-2 bg-yellow-600">Edit Ticket</button></a>
+                        <a href="{% url 'delete' ticket.id %}"><button class="px-4 py-2 bg-yellow-600">Delete Ticket</button></a><br>
+
+                            
+                                    
+                            
+                    </div>
+                    
+            </div>
+        {% endfor %}
+    </div>
+    <script>
+        var message_ele = document.getElementById("message_container");
+
+        // Set a timeout to hide the element after a few seconds (e.g., 3000 milliseconds = 3 seconds)
+        setTimeout(function(){ 
+            if (message_ele) { // Check if the element exists before trying to hide it
+                message_ele.style.display = "none"; 
+            }
+        }, 1000);
+    </script>
+                    
+{% endblock %}
