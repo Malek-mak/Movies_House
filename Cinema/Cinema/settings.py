@@ -81,11 +81,12 @@ WSGI_APPLICATION = 'Cinema.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Movies_db',
-        'USER': 'postgres',
+        'NAME': 'vfovzwoivdqrkzxsudhw',
+        'USER': 'bdghuskpjpkanwjooaug',
         'PASSWORD': os.getenv('PASSWORD'),
-        'HOST': 'localhost', 
-        'PORT': '5432',
+        'HOST': '9qasp5v56q8ckkf5dc.leapcellpool.com',
+        'PORT': '6438',
+        'OPTIONS': {'sslmode': 'require'}
     }
 }
 
@@ -137,4 +138,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Movies_House.MyUser'
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev']
+CSRF_TRUSTED_ORIGINS = ['https://malek-marketplace.onrender.com']
