@@ -139,4 +139,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Movies_House.MyUser'
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://ortfolio-boulahdourabdelmalek2190-hhkkvned.leapcell.dev']
+CSRF_TRUSTED_ORIGINS = ['https://oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev']
