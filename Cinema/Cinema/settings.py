@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-w5#2yzqcldlqpaaqyf-g1k%+qq(!l6of&965)yp5252fwh!2r&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev', 'localhost']
 
@@ -139,4 +139,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Movies_House.MyUser'
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev']
+CSRF_TRUSTED_ORIGINS = ['oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev']
