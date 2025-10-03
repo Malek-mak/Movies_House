@@ -19,6 +19,9 @@
             </select>
             <button type="submit" class="btn btn-primary py-2 px-5 bg-yellow-500 mx-2">Filter</button>
         </form><br>
+        <form method="get" action="" class="px-12">
+            <button type="submit" name="remove" class="btn btn-primary py-2 px-5 bg-gray-500 mx-2 rounded-lg">Remove Filter</button>
+        </form>
     </div><br><hr><br>
     <div class="grid grid-cols-4 gap-4 ">
         {% for movie in movies %}

@@ -28,8 +28,13 @@ SECRET_KEY = 'django-insecure-w5#2yzqcldlqpaaqyf-g1k%+qq(!l6of&965)yp5252fwh!2r&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev', 'localhost']
+ALLOWED_HOSTS = ['oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev', 'localhost', '127.0.0.1']
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL ='/'
+ACCOUNT_SESSION_REMEMBER = True
+SOCIALACCOUNT_LOGIN_ON_GET = True
+ALLAUTH_UI_THEME = "dark"
 
 # Application definition
 
@@ -42,6 +47,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Movies_House',
     'UsersApp',
+    "allauth_ui",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "widget_tweaks",
+    "slippers",
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -52,14 +64,44 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
+ 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+
 
 ROOT_URLCONF = 'Cinema.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates', 'allauth')], 
+        
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,4 +181,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'Movies_House.MyUser'
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ['https://oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev']
+CSRF_TRUSTED_ORIGINS = ['https://oviesouse-boulahdourabdelmalek2190-svl6jcvp.leapcell.dev', 'http://127.0.0.1:8000']

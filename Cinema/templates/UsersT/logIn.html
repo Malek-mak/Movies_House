@@ -2,16 +2,14 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+
+
 <div class="flex items-center justify-center">
+    
     <div class="bg-neutral-700 rounded-lg p-4">
-        <h1 class="text-white">Login</h1>
-        <form action=""  method="post">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit" class="btn btn-primary bg-teal-800 hover:opacity-70 text-white px-4 py-2 m-2">Login</button>
-        </form><br>
-        <p class="text-white font-semobold">Don't have an Account?
-        <a href="{% url 'signup' %}" class="hover:text-blue-700">Sign up</a></p>
+        
+       
     </div>
 </div>
+
 {% endblock %}

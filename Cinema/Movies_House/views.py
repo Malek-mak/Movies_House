@@ -22,6 +22,8 @@ def Movies(request):
         movies = movies.filter(genre=request.GET.get('genre'))
     elif search:
         movies = movies.filter(Q(name__icontains=search) | Q(discription__icontains=search))
+    else:
+        movies = Movies_List_db.objects.all()
         
     return render (request, 'Movies/movies.html', {'movies': movies, 'genres': genres})
 

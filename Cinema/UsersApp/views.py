@@ -6,6 +6,8 @@ from .forms import SignUpForm, LogInForm
 from django.contrib import messages 
 
 
+
+
 def SignUp(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
