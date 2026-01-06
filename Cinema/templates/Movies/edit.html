@@ -13,7 +13,7 @@
                             
                         <h1 class="text-white text-4xl font-bold">{{ ticket.movie.name }}</h1><br>
                         <h2 class="text-gray-500 font-semibold">Duration: {{ ticket.movie.duration }}</h2>
-                        <h2 class="text-gray-500 font-semibold">Rating: {{ ticket.movie.rating }}</h2>
+                        <h2 class="text-gray-500 font-semibold">Rating: {{ ticket.movie.rating }} ⭐</h2>
                         <h2 class="text-gray-500 font-semibold">Year: {{ ticket.movie.year }}</h2>
                         <p class="text-white font-semibold">
                             {% for genre in ticket.movie.genre.all %}
@@ -58,23 +58,61 @@
                     {% endif %}
                         <style>
                         .modal {
-                            position: fixed; top: 6cm; left: 30%;
-                            width: 38%; height: 40%;
-                            background: rgba(0,0,0,0.6);
-                            align-items: center; justify-content: center;
+                            position: fixed;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+
+                            width: 95%;
+                            max-width: 600px;
+                            height: auto;
+                            max-height: 90vh;
+
+                            background: rgba(0, 0, 0, 0.6);
                             display: grid;
-                            grid-template-columns: repeat(10, 50px); 
-                            gap: 8px;
-                            margin-top: 20px;
-                           
+
+                            grid-template-columns: repeat(auto-fit, minmax(32px, 1fr));
+                            gap: 6px;
+
+                            padding: 12px;
+                            overflow-y: auto;
                         }
-                        
+
+                        /* Modal content */
                         .modal-content {
-                            
-                            background: white; padding: 20px; border-radius: 8px;
+                            background: white;
+                            padding: 16px;
+                            border-radius: 8px;
                         }
+
+                        /* Seat buttons */
                         #seat-container button {
-                            margin: 4px; padding: 10px; border: 1px solid #ccc; background-color: green;
+                            padding: 8px;
+                            font-size: 12px;
+                            border: 1px solid #ccc;
+                            background-color: green;
+                            border-radius: 4px;
+                        }
+
+                        /* Tablets and up */
+                        @media (min-width: 768px) {
+                            .modal {
+                                width: 70%;
+                                max-width: 800px;
+                                gap: 8px;
+                            }
+
+                            #seat-container button {
+                                padding: 10px;
+                                font-size: 14px;
+                            }
+                        }
+
+                        /* Desktop */
+                        @media (min-width: 1024px) {
+                            .modal {
+                                width: 50%;
+                            }
                         }
                     </style>
             </div>

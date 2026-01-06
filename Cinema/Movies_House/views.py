@@ -17,15 +17,18 @@ def Movies(request):
     movies = Movies_List_db.objects.all()
     search = request.GET.get('search', '')
     genre = request.GET.get('genre', '')
-    
+    filterd = None
     if genre :
         movies = movies.filter(genre=request.GET.get('genre'))
+        filterd = True
     elif search:
         movies = movies.filter(Q(name__icontains=search) | Q(discription__icontains=search))
+        filterd = True
     else:
         movies = Movies_List_db.objects.all()
+        filterd = False
         
-    return render (request, 'Movies/movies.html', {'movies': movies, 'genres': genres})
+    return render (request, 'Movies/movies.html', {'movies': movies, 'genres': genres, 'filterd': filterd})
 
 
 def About(request):

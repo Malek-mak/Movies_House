@@ -10,28 +10,26 @@
                                 </div>
                             {% endfor %}
                         {% endif %}
-    <div class="grid grid-cols-4 gap-4 ">
+    <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
         {% for ticket in data %}
             <div class="col-{{ ticket.id }} bg-neutral-800 rounded-lg">
                 <div class="pb-2" >
-                        <figure class="pb-2">
+                    <div class="mb-2 grid grid-col-2 rounded-lg">
+                        <figure class="pb-2 rounded-base">
                             <img src="{{ ticket.movie.image.url }}"><hr>
                         </figure>
                         <div class="pl-2">
-                        <h1 class="text-white text-2xl font-bold text-center">{{ ticket.movie.name }}</h1>
-                        <h2 class="text-white">Seat: <strong>{{ ticket.seat }}</strong></h2>
-                        <h2 class="text-white">Play Date: {{ ticket.date.date }}</h2>
-                        <h2 class="text-white">Ticket Price: {{ ticket.movie.price }}</h2>
-                        <h2 class="text-white">Ticket Booked at: {{ ticket.booked_at }}</h2>
-                        </div>
-                       <a href="{% url 'edit' ticket.id %}"><button class="px-4 py-2 bg-yellow-600">Edit Ticket</button></a>
-                        <a href="{% url 'delete' ticket.id %}"><button class="px-4 py-2 bg-yellow-600">Delete Ticket</button></a><br>
-
-                            
-                                    
-                            
-                    </div>
+                            <h1 class="text-white md:text-xl font-bold md:text-center pl-2 h-1/3 md:h-1/4 overflow-hidden text-ellipsis">{{ ticket.movie.name }}</h1>
+                            <h2 class="text-white">Seat: <strong>{{ ticket.seat }}</strong></h2>
                     
+                            <h2 class="text-white">Price: {{ ticket.movie.price }} $</h2>
+                            <h2 class="text-white">Booked at: {{ ticket.booked_at }}</h2>
+                        </div>
+                       <a href="{% url 'edit' ticket.id %}"><button class="px-4 py-2 mt-2 bg-yellow-600">Edit</button></a>
+                        <a href="{% url 'delete' ticket.id %}"><button class="px-4 py-2 mt-1 bg-yellow-600">Delete</button></a><br>
+   
+                    </div>
+                </div>  
             </div>
         {% endfor %}
     </div>

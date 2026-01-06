@@ -15,4 +15,4 @@ urlpatterns = [
     path('accounts/login/', LoginView.as_view(), name='account_login'),
     path('accounts/logout/', LogoutView.as_view(), name='account_logout'),
     #path('accounts/profile/', MyMovies, name='profile'),
-] +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

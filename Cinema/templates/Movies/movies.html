@@ -3,11 +3,11 @@
 {% block content %}
 <div>
     <h1 class="text-white text-4xl font-semibold text-center">Movies</h1><br>
-    <div class="flex flex-row items-center justify-center gap-4">
+    <div class="flex flex-wrap md:flex-row items-center justify-center gap-4">
         <form method="get" action="" class="px-12">
             <h3 class="text-white font-semibold p-2">Search by Name:</h3>
             <input type="text" name="search" placeholder="Search for Movie" class="w-80 h-8 rounded-lg p-2">
-            <button type="submit" class="btn btn-primary py-2 px-5 bg-yellow-500 mx-2">Search</button>
+            <button type="submit" class="btn btn-primary py-2 mt-2 px-5 bg-yellow-500 mx-2">Search</button>
         </form><br>
         
         <form action="" method="get" class="px-12">
@@ -17,37 +17,45 @@
                     <option value="{{ g.id }}">{{ g.genre_name }}</option>
                 {% endfor %}
             </select>
-            <button type="submit" class="btn btn-primary py-2 px-5 bg-yellow-500 mx-2">Filter</button>
+            <button type="submit" class="btn btn-primary py-2 px-5 bg-yellow-500 mx-2" onsubmit="">Filter</button>
         </form><br>
-        <form method="get" action="" class="px-12">
-            <button type="submit" name="remove" class="btn btn-primary py-2 px-5 bg-gray-500 mx-2 rounded-lg">Remove Filter</button>
-        </form>
+        {% if filterd %}
+            <form method="get" action="" id="remove-filter" class="md:px-12 p-2">
+                <button type="submit" name="remove" class="btn btn-primary py-2 px-5 bg-gray-500 mx-2 rounded-lg">Remove Filter</button>
+            </form>
+        {% endif %}
     </div><br><hr><br>
-    <div class="grid grid-cols-4 gap-4 ">
+    <div class="grid grid-cols-3 md:grid-cols-4 flex flex-wrap gap-4">
         {% for movie in movies %}
-        <div class="col-{{ movie.id }} bg-neutral-800 rounded-lg">
+        <div class="md:col-{{ movie.id }} bg-neutral-800 rounded-lg">
             <a href="{% url 'movie_detail'  movie.id  %}">
-                    <div class="pb-2">
+                    <div class="mb-2 grid grid-col-2 rounded-lg">
                         <figure class="pb-2">
-                            <img src="{{ movie.image.url }}"><hr>
+                            <img class="rounded-base md:h-auto md:max-w-full" src="{{ movie.image.url }}"><hr>
                         </figure>
-                        <div class="pl-2">
-                        <h1 class="text-white text-xl font-bold text-center pb-4"> {{ movie.name }}</h1>
-                        <h2 class="text-white">Duration: {{ movie.duration }} min</h2>
-                        <h2 class="text-white">Rating: {{ movie.rating }}</h2>
-                        <p class="text-white">
-                            Genre: 
-                            {% for genre in movie.genre.all %}
-                                {{ genre }}
-                            {% endfor %}</p>
+                        <div class="text-wrap">
+                            <h1 class="text-white md:text-xl font-bold md:text-center pl-2 h-1/3 md:h-1/4 overflow-hidden text-ellipsis"> {{ movie.name }}</h1>
+                            <h2 class="text-white pl-2 mx-4"> {{ movie.rating }} ⭐</h2>
+                            <h2 class="text-white pl-2 mx-4"> $ {{ movie.price }}</h2>
+                                
+                        </div>
+                        <div class="pl-2 hidden md:block">
+                            <p class="text-white pl-2"><strong><span class="hidden md:block"> Play Dates:</span></strong>
+                                {% for d in movie.showtimes.all %}
+                                    {{ d.date }} <strong class="text-black px-2 font-bold pl-2"> {{ d.tickets_left }} Seat Left</strong><br>
+                                {% endfor %}
+                            </p>
 
-                        <h2 class="text-white">Year: {{ movie.year }}</h2>
-                        <h2 class="text-white">Ticket Price: ${{ movie.price }}</h2>
-                        <p class="text-white"><strong> Play Dates:</strong><br>
-                            {% for d in movie.showtimes.all %}
-                                {{ d.date }} <strong class="text-black px-2 font-bold"> {{ d.tickets_left }} Seat Left</strong><br>
-                            {% endfor %}
-                        </p>
+                            <h2 class="text-white">Duration:{{ movie.duration }} min</h2>
+                            
+                            <p class="text-white">
+                                Genre: 
+                                {% for genre in movie.genre.all %}
+                                    {{ genre }}
+                                {% endfor %}</p>
+
+                            <h2 class="text-white">Year: {{ movie.year }}</h2>
+                            
                         </div>
                     </div>
                 </a>
