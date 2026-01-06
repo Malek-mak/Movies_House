@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "slippers",
     'allauth.socialaccount.providers.google',
-    'compressor',
+    
 ]
 
 MIDDLEWARE = [
