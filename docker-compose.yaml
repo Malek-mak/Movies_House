@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    image: app
+    container_name: Cinema_container
+    command: python Cinema/manage.py runserver 0.0.0.0:8000
